@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @MicronautTest(transactional = false)
 public class MnJpaProcessEngineConfigurationTest extends MnProcessEngineConfigurationTest {
 
-    //Note: Start MnJpaProcessEngineConfigurationTest and MnProcessEngineConfigurationTest will fail
+    //Note: Start MnJpaProcessEngineConfigurationTest and MnProcessEngineConfigurationTest will fail because MnJpaProcessEngineConfigurationTest also saves data --> assertation will fail
 
     @Inject
     RepositoryService repositoryService;

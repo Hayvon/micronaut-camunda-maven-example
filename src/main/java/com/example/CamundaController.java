@@ -20,10 +20,13 @@ public class CamundaController {
 
     private final RuntimeService runtimeService;
 
-    public CamundaController(ProcessEngine processEngine, RepositoryService repositoryService, RuntimeService runtimeService) {
+    private final BookRepository bookRepository;
+
+    public CamundaController(ProcessEngine processEngine, RepositoryService repositoryService, RuntimeService runtimeService, BookRepository bookRepository) {
         this.processEngine = processEngine;
         this.repositoryService = repositoryService;
         this.runtimeService = runtimeService;
+        this.bookRepository = bookRepository;
     }
 
     @Get("/name")
@@ -47,5 +50,18 @@ public class CamundaController {
     public String startHelloWorldProcess() {
         return runtimeService.startProcessInstanceByKey("HelloWorld").getId();
     }
+
+    @Get("/bookCount")
+    @Produces(MediaType.TEXT_PLAIN)
+    @ExecuteOn(TaskExecutors.IO)
+    public String getBookCount() {
+        return "BookCount: " + bookRepository.count();
+    }
+
+    @Post(value = "/newBook", consumes ={"application/json"})
+    void createUser(@Body() Book newBook){
+        bookRepository.save(newBook);
+    }
+
 
 }
